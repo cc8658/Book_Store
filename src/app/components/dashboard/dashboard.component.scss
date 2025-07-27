@@ -1,0 +1,239 @@
+.toolbar {
+  background-color: #a03037;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 1rem;
+  height: 60px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .logo {
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 500;
+    font-family: "Roboto", sans-serif;
+  }
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 4px;
+  padding: 0 10px;
+  height: 36px;
+  width: 40%;
+  &:disabled {
+    background-color: #a49d9d;
+    cursor: not-allowed;
+  }
+
+  .search-icon {
+    color: #757575;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    padding-left: 8px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .close {
+    background-color: #fff;
+    border: none;
+
+    mat-icon {
+      color: #c0c0c0;
+    }
+  }
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: -0.5rem;
+
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+  }
+
+  button {
+    background-color: #a03037;
+    border: none;
+  }
+
+  mat-icon {
+    color: white;
+  }
+
+  span {
+    margin-top: -10px;
+  }
+}
+
+::ng-deep .mat-menu-panel.account-menu {
+  padding: 0;
+  width: 220px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+::ng-deep .mat-menu-panel.account-menu {
+  padding: 0;
+  width: 240px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.menu-header {
+  padding: 12px 16px 4px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.menu-subtext {
+  padding: 0 16px 12px;
+  font-size: 13px;
+  color: #757575;
+}
+
+.menu-login-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px 12px;
+
+  .login-btn {
+    padding: 8px 12px;
+    border: 1px solid #a03037;
+    background: none;
+    color: #a03037;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #fcebea;
+    }
+  }
+}
+
+.menu-logout-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #a03037;
+  background-color: transparent;
+  color: #a03037;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fcebeb;
+  }
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .sort-button {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 4px 12px;
+    border-radius: 4px;
+    background-color: white;
+
+    mat-icon {
+      margin-left: 4px;
+    }
+  }
+}
+
+.book-section {
+  padding: 1.5rem 7rem;
+
+  .section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+
+    span {
+      font-weight: normal;
+      color: #757575;
+      font-size: 14px;
+    }
+  }
+
+  .book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+
+  button {
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    padding: 4px 12px;
+    border-radius: 4px;
+
+    &.active {
+      background-color: #1976d2;
+      color: white;
+      font-weight: bold;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .book-section {
+    padding: 1.5rem 0rem 1.5rem 3rem;
+  }
+}

@@ -1,0 +1,143 @@
+<mat-toolbar class="toolbar">
+  <div class="head">
+    <a routerLink="/home"
+      ><img src="assets/logo.png" alt="Logo" class="logo"
+    /></a>
+    <a routerLink="/home"><span class="title">Bookstore</span></a>
+  </div>
+
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input
+      matInput
+      placeholder="Search"
+      [(ngModel)]="searchText"
+      (input)="searchBooks()"
+      [disabled]="router.url !== '/home'"
+    />
+    <button
+      mat-icon-button
+      (click)="clearSearch()"
+      class="close"
+      [disabled]="router.url !== '/home'"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="icons">
+    <div class="icon-item" [matMenuTriggerFor]="accountMenu">
+      <button mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <span>{{ isLoggedIn ? userName : "Profile" }}</span>
+    </div>
+    <div class="icon-item" (click)="cart()">
+      <button mat-icon-button><mat-icon>shopping_cart</mat-icon></button>
+      <span>Cart</span>
+    </div>
+  </div>
+</mat-toolbar>
+
+<ng-container *ngIf="router.url === '/home'">
+  <div class="book-section">
+    <div class="top">
+      <h2 class="section-title">
+        Books <span>({{ filteredBooks.length }} Items)</span>
+      </h2>
+
+      <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-button">
+        Sort by relevance
+        <mat-icon>expand_more</mat-icon>
+      </button>
+
+      <mat-menu #sortMenu="matMenu">
+        <button mat-menu-item (click)="sortBooks('lowToHigh')">
+          Price: Low to High
+        </button>
+        <button mat-menu-item (click)="sortBooks('highToLow')">
+          Price: High to Low
+        </button>
+        <button mat-menu-item (click)="sortBooks('newest')">
+          Newest Arrivals
+        </button>
+      </mat-menu>
+    </div>
+
+    <div class="book-grid">
+      <app-book-card
+        *ngFor="let book of paginatedBooks"
+        [book]="book"
+      ></app-book-card>
+    </div>
+
+    <div class="pagination">
+      <button mat-button (click)="prevPage()" [disabled]="currentPage === 1">
+        Previous
+      </button>
+
+      <ng-container
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+      >
+        <button
+          mat-button
+          [class.active]="currentPage === i + 1"
+          (click)="goToPage(i + 1)"
+        >
+          {{ i + 1 }}
+        </button>
+      </ng-container>
+
+      <button
+        mat-button
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</ng-container>
+
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>
+
+<mat-menu #accountMenu="matMenu" class="account-menu">
+  <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
+    <div class="menu-header">Welcome</div>
+    <div class="menu-subtext">To access account and manage orders</div>
+    <div class="menu-login-wrapper">
+      <button class="login-btn" routerLink="/login">LOGIN/SIGNUP</button>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-menu-item disabled>
+      <mat-icon>assignment</mat-icon>
+      <span>My Orders</span>
+    </button>
+    <button mat-menu-item disabled>
+      <mat-icon>favorite_border</mat-icon>
+      <span>Wishlist</span>
+    </button>
+  </ng-container>
+
+  <ng-template #loggedInBlock>
+    <div class="menu-header">Hello {{ userName }},</div>
+    <button mat-menu-item [routerLink]="['/home/profile']">
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/home/orders']">
+      <mat-icon>assignment</mat-icon>
+      <span>My Orders</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/home/wishlist']">
+      <mat-icon>favorite_border</mat-icon>
+      <span>My Wishlist</span>
+    </button>
+    <mat-divider></mat-divider>
+    <div class="menu-logout-wrapper">
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </ng-template>
+</mat-menu>

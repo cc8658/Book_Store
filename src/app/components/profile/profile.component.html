@@ -1,0 +1,72 @@
+<div class="profile-container">
+  <p class="breadcrumb"><a routerLink="/home">Home</a> / <b>Profile</b></p>
+
+  <h2>
+    Personal Details
+    <a class="edit-link" *ngIf="!isEditing" (click)="enableEdit()">Edit</a>
+    <button
+      *ngIf="isEditing"
+      mat-raised-button
+      color="primary"
+      (click)="save()"
+    >
+      Save
+    </button>
+  </h2>
+
+  <form [formGroup]="personal">
+    <label>Full Name</label>
+    <input formControlName="fullName" />
+
+    <label>Email Id</label>
+    <input formControlName="email" />
+
+    <label>Password</label>
+    <input formControlName="password" type="password" />
+
+    <label>Mobile Number</label>
+    <input formControlName="phone" />
+  </form>
+
+  <div class="address-title-bar">
+    <h2>Address Details</h2>
+    <button mat-stroked-button class="new-add" (click)="addNewAddress()">
+      Add New Address
+    </button>
+  </div>
+
+  <form class="address-card" [formGroup]="addressForm">
+    <div class="top-bar">
+      <h3>1. {{ addressForm.get("type")?.value }}</h3>
+      <ng-container *ngIf="!isEditingAdd; else saveBtn">
+        <a class="edit-link" (click)="enableAddEdit()">Edit</a>
+      </ng-container>
+      <ng-template #saveBtn>
+        <button mat-raised-button color="primary" (click)="saveAddress()">
+          Save
+        </button>
+      </ng-template>
+    </div>
+
+    <label>Address</label>
+    <textarea formControlName="address"></textarea>
+
+    <div class="city-state">
+      <div>
+        <label>City/Town</label>
+        <input formControlName="city" />
+      </div>
+      <div>
+        <label>State</label>
+        <input formControlName="state" />
+      </div>
+    </div>
+
+    <label>Type</label>
+    <mat-radio-group formControlName="type">
+      <mat-radio-button value="Home">Home</mat-radio-button>
+      <mat-radio-button value="Office">Office</mat-radio-button>
+      <mat-radio-button value="Other">Other</mat-radio-button>
+    </mat-radio-group>
+  </form>
+</div>

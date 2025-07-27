@@ -1,0 +1,131 @@
+<div class="cart-container" *ngIf="cartItems.length > 0; else noCart">
+  <p class="breadcrumb"><a routerLink="/home">Home</a> / <b>My cart</b></p>
+
+  <div class="cart-header">
+    <h3>My Cart ({{ cartItems.length }})</h3>
+    <div class="location-selector">
+      <mat-icon>location_on</mat-icon>
+      Use current location
+      <mat-icon>expand_more</mat-icon>
+    </div>
+  </div>
+
+  <div class="cart-item bordered-box" *ngFor="let item of cartItems">
+    <img src="assets/bookimg.png" alt="Book Image" />
+    <div class="item-details">
+      <h4>{{ item.product_id.bookName }}</h4>
+      <p class="author">by {{ item.product_id.author }}</p>
+      <div class="price">
+        <span class="sale-price">Rs. {{ item.product_id.discountPrice }}</span>
+        <span class="original-price">Rs. {{ item.product_id.price }}</span>
+      </div>
+      <div class="quantity-control">
+        <button
+          mat-icon-button
+          class="addBtn"
+          (click)="decrementQuantity(item)"
+        >
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span>{{ item.quantityToBuy }}</span>
+        <button
+          mat-icon-button
+          class="addBtn"
+          (click)="incrementQuantity(item)"
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+        <a class="remove-link" (click)="removeFromCart(item._id)">Remove</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-button" *ngIf="!showCustomerDetails && !showSummary">
+    <button
+      mat-raised-button
+      color="primary"
+      class="continue-button"
+      (click)="showCustomerDetails = true"
+    >
+      PROCEED TO CUSTOMER DETAILS
+    </button>
+  </div>
+
+  <div *ngIf="showCustomerDetails" class="customer-details bordered-box">
+    <h3>Customer Details</h3>
+
+    <div class="customer-fields">
+      <div>
+        <label>Full Name</label>
+        <input [value]="userName" disabled />
+      </div>
+      <div>
+        <label>Mobile Number</label>
+        <input [value]="userPhone" disabled />
+      </div>
+    </div>
+
+    <div
+      *ngFor="let address of addresses; let i = index"
+      class="address-section"
+    >
+      <label>Address</label>
+      <textarea [value]="address.address" disabled></textarea>
+
+      <div class="customer-fields">
+        <div>
+          <label>City/Town</label>
+          <input [value]="address.city" disabled />
+        </div>
+        <div>
+          <label>State</label>
+          <input [value]="address.state" disabled />
+        </div>
+      </div>
+    </div>
+
+    <div class="action-button" *ngIf="showCustomerDetails && !showSummary">
+      <button
+        mat-raised-button
+        color="primary"
+        class="continue-button"
+        (click)="continueToSummary()"
+      >
+        CONTINUE
+      </button>
+    </div>
+  </div>
+
+  <div class="order-summary bordered-box" *ngIf="showSummary">
+    <h3>Order Summary</h3>
+
+    <div *ngFor="let item of cartItems" class="summary-item">
+      <img src="assets/bookimg.png" alt="Book Image" />
+      <div>
+        <h4>{{ item.product_id.bookName }}</h4>
+        <p class="author">by {{ item.product_id.author }}</p>
+        <span class="sale-price">Rs. {{ item.product_id.discountPrice }}</span>
+        <span class="quantity"> | Quantity: {{ item.quantityToBuy }}</span>
+      </div>
+    </div>
+
+    <div class="total-section">
+      <h4>Total: Rs. {{ getTotalPrice() }}</h4>
+    </div>
+
+    <div class="action-button" *ngIf="showSummary">
+      <button
+        mat-raised-button
+        color="primary"
+        class="checkout-button"
+        (click)="orderNow()"
+      >
+        CHECKOUT
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #noCart>
+  <p>Your cart is empty.</p>
+</ng-template>

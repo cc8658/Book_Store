@@ -1,0 +1,37 @@
+<div class="wishlist-container">
+  <p class="breadcrumb"><a routerLink="/home">Home</a> / <b>My Wishlist</b></p>
+
+  <div *ngIf="wishlist.length > 0; else noItems">
+    <h3>
+      My Wishlist ({{
+        wishlist.length < 10 ? "0" + wishlist.length : wishlist.length
+      }})
+    </h3>
+
+    <div class="wishlist-item" *ngFor="let item of wishlist">
+      <div class="item-left">
+        <img src="assets/bookimg.png" alt="Book Image" />
+
+        <div class="item-info">
+          <h4>{{ item.product_id.bookName }}</h4>
+          <p class="author">by {{ item.product_id.author }}</p>
+
+          <div class="price">
+            <span class="sale-price"
+              >Rs. {{ item.product_id.discountPrice }}</span
+            >
+            <span class="original-price">Rs. {{ item.product_id.price }}</span>
+          </div>
+        </div>
+      </div>
+
+      <button mat-icon-button (click)="removeFromWishlist(item.product_id._id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <ng-template #noItems>
+    <p>Your wishlist is empty.</p>
+  </ng-template>
+</div>

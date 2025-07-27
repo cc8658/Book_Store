@@ -1,0 +1,117 @@
+<div *ngIf="book" class="book-details-container">
+  <p class="breadcrumb">
+    <a routerLink="/home">Home</a> / <b>{{ book.bookName }}</b>
+  </p>
+
+  <div class="book-content">
+    <div class="image-section">
+      <img [src]="'assets/bookimg.png'" alt="Book Image" class="book-image" />
+
+      <div class="button-group">
+        <ng-container *ngIf="!isInCart; else quantityControls">
+          <button
+            mat-raised-button
+            color="primary"
+            class="notify"
+            (click)="addToCart()"
+          >
+            Add to Bag
+          </button>
+        </ng-container>
+
+        <ng-template #quantityControls>
+          <button mat-icon-button class="quantity-btn" (click)="decrement()">
+            <mat-icon>remove</mat-icon>
+          </button>
+
+          <span class="quantity-value">{{ quantity }}</span>
+
+          <button mat-icon-button class="quantity-btn" (click)="increment()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </ng-template>
+        <button
+          mat-stroked-button
+          color="primary"
+          class="wish"
+          (click)="addToWishlist()"
+          [disabled]="isWishlisted"
+        >
+          <mat-icon>favorite</mat-icon>
+          {{ isWishlisted ? "Wishlisted" : "Wishlist" }}
+        </button>
+      </div>
+    </div>
+
+    <div class="book-info">
+      <h2>{{ book.bookName }}</h2>
+      <p class="author">by {{ book.author }}</p>
+
+      <div class="rating">
+        <span class="stars">4.5 ★</span>
+        <span class="count">( {{ book.quantity }} )</span>
+      </div>
+
+      <div class="price">
+        <span class="sale-price">Rs. {{ book.discountPrice }}</span>
+        <span class="original-price">Rs. {{ book.price }}</span>
+      </div>
+
+      <hr class="separator" />
+
+      <p class="book-detail-title">• Book Detail</p>
+      <p class="book-description">
+        Incididunt voluptate minim eiusmod dolore pariatur ea aliqua consectetur
+        adipisicing laborum. Nulla fugiat officia nostrud sint. Fugiat do aute
+        tempor fugiat eiusmod exercitation nisi qui veniam pariatur. Irure
+        tempor aliquip cillum labore nostrud deserunt ipsum commodo amet ut
+        reprehenderit dolore dolore est. Do et nulla consectetur consequat amet
+        ad tempor.
+      </p>
+
+      <hr class="separator" />
+
+      <div class="customer-feedback">
+        <h3>Customer Feedback</h3>
+
+        <div class="feedback-card">
+          <p class="overall-rating-title">Overall Rating</p>
+
+          <div class="rating-stars">
+            <mat-icon
+              *ngFor="let star of [1, 2, 3, 4, 5]"
+              (click)="selectRating(star)"
+            >
+              {{ star <= selectedRating ? "star" : "star_border" }}
+            </mat-icon>
+          </div>
+
+          <textarea
+            [(ngModel)]="feedbackText"
+            placeholder="Write your review"
+          ></textarea>
+          <button mat-raised-button color="primary" (click)="submitFeedback()">
+            Submit
+          </button>
+        </div>
+
+        <div class="feedback-list">
+          <div class="feedback-item" *ngFor="let feedback of feedbacks">
+            <div class="user-initial">
+              {{ feedback.userName.charAt(0).toUpperCase() }}
+            </div>
+            <div class="feedback-content">
+              <p class="user-name">{{ feedback.userName }}</p>
+              <div class="user-rating">
+                <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]">
+                  {{ star <= feedback.rating ? "star" : "star_border" }}
+                </mat-icon>
+              </div>
+              <p class="user-comment">{{ feedback.comment }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

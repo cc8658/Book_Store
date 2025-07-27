@@ -1,0 +1,19 @@
+<div class="orders-container">
+  <p class="breadcrumb"><a routerLink="/home">Home</a> / <b>My Order</b></p>
+
+  <div class="order-card" *ngFor="let order of orders">
+    <img [src]="order.image" alt="Book Image" />
+    <div class="order-details">
+      <h3>{{ order.bookName }}</h3>
+      <p class="author">by {{ order.author }}</p>
+      <div class="price">
+        <span class="sale-price">Rs. {{ order.price }}</span>
+        <span class="original-price">Rs. {{ order.originalPrice }}</span>
+      </div>
+    </div>
+    <div class="order-status">
+      <mat-icon color="primary">fiber_manual_record</mat-icon>
+      <span>Order Placed on {{ order.orderDate }}</span>
+    </div>
+  </div>
+</div>

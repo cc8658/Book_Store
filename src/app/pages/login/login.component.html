@@ -1,0 +1,141 @@
+<div class="main-container">
+  <mat-card class="left-card">
+    <img class="logo" src="/assets/pic.png" alt="BookStore Logo" />
+    <h2 class="heading">Online Book Shopping</h2>
+  </mat-card>
+  <mat-card class="right-card">
+    <div class="tabs">
+      <span [class.active]="isLogin" (click)="showLogin()">LOGIN</span>
+      <span [class.active]="!isLogin" (click)="showSignup()">SIGNUP</span>
+    </div>
+
+    <form
+      *ngIf="isLogin"
+      class="form"
+      [formGroup]="loginForm"
+      (ngSubmit)="onLogin()"
+    >
+      <label>Email Id</label>
+      <input type="email" formControlName="email" placeholder="Enter email" />
+      <div
+        *ngIf="
+          loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+        "
+        class="error"
+      >
+        <small *ngIf="loginForm.get('email')?.errors?.['required']"
+          >Email is required</small
+        >
+        <small *ngIf="loginForm.get('email')?.errors?.['email']"
+          >Invalid email</small
+        >
+      </div>
+
+      <label>Password</label>
+      <div class="password-container">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Enter password"
+        />
+        <mat-icon class="eye-icon" (click)="togglePasswordVisibility()">
+          {{ showPassword ? "visibility" : "visibility_off" }}
+        </mat-icon>
+      </div>
+      <div
+        *ngIf="
+          loginForm.get('password')?.touched &&
+          loginForm.get('password')?.invalid
+        "
+        class="error"
+      >
+        <small>Password is required</small>
+      </div>
+
+      <a class="forgot" routerLink="/forgotPassword">Forgot Password?</a>
+      <button type="submit" class="login-btn">Login</button>
+      <div class="divider">
+        <hr />
+        <span>OR</span>
+        <hr />
+      </div>
+      <div class="social-buttons">
+        <button class="facebook">Facebook</button>
+        <button class="google">Google</button>
+      </div>
+    </form>
+
+    <form
+      *ngIf="!isLogin"
+      [formGroup]="signupForm"
+      class="form"
+      (ngSubmit)="onSignup()"
+    >
+      <label>Full Name</label>
+      <input type="text" formControlName="fullName" placeholder="Enter name" />
+      <div
+        *ngIf="
+          signupForm.get('fullName')?.touched &&
+          signupForm.get('fullName')?.invalid
+        "
+        class="error"
+      >
+        <small>Name is required</small>
+      </div>
+
+      <label>Email Id</label>
+      <input type="email" formControlName="email" placeholder="Enter email" />
+      <div
+        *ngIf="
+          signupForm.get('email')?.touched && signupForm.get('email')?.invalid
+        "
+        class="error"
+      >
+        <small *ngIf="signupForm.get('email')?.errors?.['required']"
+          >Email is required</small
+        >
+        <small *ngIf="signupForm.get('email')?.errors?.['email']"
+          >Invalid email</small
+        >
+      </div>
+
+      <label>Password</label>
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Create password"
+      />
+      <div
+        *ngIf="
+          signupForm.get('password')?.touched &&
+          signupForm.get('password')?.invalid
+        "
+        class="error"
+      >
+        <small>Password is required</small>
+      </div>
+
+      <label>Mobile Number</label>
+      <input
+        type="tel"
+        formControlName="phone"
+        placeholder="Enter phone number"
+      />
+      <div
+        *ngIf="
+          signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid
+        "
+        class="error"
+      >
+        <small *ngIf="signupForm.get('phone')?.errors?.['required']"
+          >Phone is required</small
+        >
+        <small *ngIf="signupForm.get('phone')?.errors?.['pattern']"
+          >Must be 10 digits</small
+        >
+      </div>
+
+      <button type="submit" class="login-btn">Signup</button>
+    </form>
+  </mat-card>
+</div>

@@ -1,0 +1,24 @@
+<div class="card-wrapper" [routerLink]="['/home/book', book._id]">
+  <mat-card class="book-card" [class.out-of-stock]="book.quantity <= 0">
+    <div class="quick-view">QUICK VIEW</div>
+
+    <img mat-card-image [src]="'assets/bookimg.png'" alt="Book Image" />
+
+    <div class="stock-label" *ngIf="book.quantity <= 0">OUT OF STOCK</div>
+
+    <mat-card-content>
+      <h3>{{ book.bookName }}</h3>
+      <p class="author">by {{ book.author }}</p>
+
+      <div class="rating">
+        <span class="stars">4.5 ★</span>
+        <span class="count">{{ book.quantity }}</span>
+      </div>
+
+      <div class="price">
+        <span class="sale-price">Rs. {{ book.discountPrice }}</span>
+        <span class="original-price">Rs. {{ book.price }}</span>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
